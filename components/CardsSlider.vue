@@ -1,50 +1,38 @@
 <template>
   <div class="movies-slider">
     <h3>{{ title }}</h3>
-    <swiper
-      ref="carousel"
-      class="swiper"
-      :options="swiperOption"
-    >
-      <template v-if="movies && movies.results">
-        <swiper-slide
-          v-for="(movies, index) in movies.results"
-          :key="index"
-        >
-          <Card :item="movies"/>
-        </swiper-slide>
-      </template>
-      <template v-if="castsContent">
-        <swiper-slide
-          v-for="(cast, index) in castsContent"
-          :key="index"
-        >
-          <Credits :item="cast"/>
-        </swiper-slide>
-      </template>
-    </swiper>
-    <div class="swiper-button-prev" @click="prev()">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-        <path fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
-              stroke-miterlimit="10" d="M17.9 23.2L6.1 12 17.9.8"></path>
-      </svg>
-    </div>
-    <div class="swiper-button-next" @click="next()">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-        <path fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
-              stroke-miterlimit="10" d="M6.1 23.2L17.9 12 6.1.8"></path>
-      </svg>
-    </div>
+    <template>
+      <VueSlickCarousel v-bind="slickOptions">
+        <template v-if="movies && movies.results">
+          <div
+            v-for="(movies, index) in movies.results"
+            :key="index"
+          >
+            <Card :item="movies"/>
+          </div>
+        </template>
+        <template v-if="castsContent">
+          <div
+            v-for="(cast, index) in castsContent"
+            :key="index"
+          >
+            <Credits :item="cast"/>
+          </div>
+        </template>
+      </VueSlickCarousel>
+    </template>
   </div>
 </template>
 
 <script>
+import VueSlickCarousel from 'vue-slick-carousel'
+
 import Card from "./Card";
 import Credits from "./Credits";
 
 export default {
   name: "CardsSlider",
-  components: {Card, Credits},
+  components: {Card, Credits, VueSlickCarousel},
   props: {
     movies: {
       type: [Array, Object],
@@ -61,43 +49,45 @@ export default {
   },
   data() {
     return {
-      swiperOption: {
-        slidesPerView: 6,
-        slidesPerGroup: 3,
-        spaceBetween: 15,
-        pagination: false,
-        allowTouchMove: false,
-        navigation: {
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev'
-        },
-        breakpoints: {
-          1024: {
-            slidesPerView: 6,
-            spaceBetween: 15,
+      slickOptions: {
+        dots: false,
+        focusOnSelect: true,
+        infinite: false,
+        speed: 600,
+        slidesToShow: 6.5,
+        slidesToScroll: 6,
+        touchThreshold: 5,
+        responsive: [
+          {
+            breakpoint: 1024,
+            settings: {
+              slidesToShow: 6,
+              slidesToScroll: 6,
+              infinite: false,
+              dots: false,
+            }
           },
-          768: {
-            slidesPerView: 3,
-            spaceBetween: 30
+          {
+            breakpoint: 600,
+            settings: {
+              slidesToShow: 2,
+              slidesToScroll: 2,
+              initialSlide: 2,
+              arrows: false,
+              dots: true,
+            }
           },
-          640: {
-            slidesPerView: 2,
-            spaceBetween: 20
-          },
-          320: {
-            slidesPerView: 2,
-            spaceBetween: 10
+          {
+            breakpoint: 480,
+            settings: {
+              arrows: false,
+              slidesToShow: 2,
+              slidesToScroll: 2,
+              dots: true,
+            }
           }
-        }
-      }
-    }
-  },
-  methods: {
-    prev() {
-      this.$refs.carousel.$swiper.slidePrev();
-    },
-    next() {
-      this.$refs.carousel.$swiper.slideNext();
+        ]
+      },
     }
   },
   computed: {
@@ -107,3 +97,46 @@ export default {
   }
 }
 </script>
+<style lang="scss">
+.carousel-wrapper {
+  padding: 40px;
+}
+
+.img-wrapper img {
+  margin: auto;
+  width: 200px;
+  height: 100px;
+  background-image: linear-gradient(gray 100%, transparent 0);
+}
+
+.slick-slider .slick-slide {
+  padding: 0 15px 0 0;
+}
+
+.slick-prev, .slick-next {
+  width: 40px;
+  height: 40px;
+
+  &::before {
+    content: "";
+    width: 40px;
+    height: 40px;
+    position: relative;
+    display: block;
+    background-image: url("../assets/images/icons/slider-arrow.png");
+    background-size: cover;
+    transform: rotate(90deg);
+  }
+}
+
+.slick-next {
+  right: -40px;
+  &::before {
+    transform: rotate(-90deg);
+  }
+}
+
+.slick-prev {
+  left: -40px;
+}
+</style>

@@ -282,6 +282,9 @@ Cards
     z-index: 9999;
     cursor: pointer;
   }
+  @media screen and (max-width: 764px) {
+    padding: 0 1em;
+  }
 }
 
 .movie-card {
@@ -306,6 +309,9 @@ Cards
   }
 
   a {
+    display: block;
+    height: 100%;
+    width: 100%;
     > small {
       color: #fff;
       font-weight: 100;
@@ -413,4 +419,34 @@ About
     max-width: 80%;
     margin: auto;
   }
+}
+
+/*
+Navbar
+*/
+.navbar-wrapper {
+  border-bottom: 1px solid #202124;
+  background-color: #000;
+  position: absolute;
+  z-index: 999;
+  width: 100%;
+  top: 0;
+  .nav-logo {
+    width: 35px;
+    border: 1px solid #fff;
+    background-color: #fff;
+  }
+}
+
+/*
+Footer
+*/
+.footer {
+  margin-top: 2rem;
+  padding: 5px 0;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-top: 1px solid #202124;
 }

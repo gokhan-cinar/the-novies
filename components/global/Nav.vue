@@ -59,22 +59,3 @@ export default {
   name: "Nav"
 }
 </script>
-
-<style lang="scss">
-@import "assets/styles/variables";
-.navbar-wrapper {
-  border-bottom: 1px solid #202124;
-  background-color: #000;
-  position: absolute;
-  z-index: 999;
-  width: 100%;
-  top: 0;
-  .nav-logo {
-    width: 35px;
-    border: 1px solid #fff;
-    background-color: #fff;
-  }
-}
-</style>
-
-

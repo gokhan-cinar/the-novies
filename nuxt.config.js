@@ -23,11 +23,11 @@ export default {
 
   css: [
     '~/assets/styles/main.scss',
+    'vue-slick-carousel/dist/vue-slick-carousel.css',
+    'vue-slick-carousel/dist/vue-slick-carousel-theme.css'
   ],
 
-  plugins: [
-    { src: '@/plugins/vue-awesome-swiper', mode: 'client', ssr: false },
-  ],
+  plugins: [{ src: '@/plugins/vue-slick-carousel', mode: 'client' }],
 
   components: true,
 
